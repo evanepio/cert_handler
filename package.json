@@ -1,0 +1,14 @@
+{
+  "name": "cert_downloader",
+  "version": "1.0.0",
+  "description": "Downloads a cert from DNSimple",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evan Porter",
+  "license": "MIT",
+  "dependencies": {
+    "dnsimple": "^2.8.0"
+  }
+}
