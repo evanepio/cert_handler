@@ -22,7 +22,7 @@ async function getCertificate(domainId, certId) {
 }
 
 async function getStuff() {
-  let domainId = await getDomainId("dotman.ca");
+  let domainId = await getDomainId(process.env.DOMAIN_NAME);
   let certId = await getCertId(domainId);
   let certificate = await getCertificate(domainId, certId);
   console.log(certificate);
