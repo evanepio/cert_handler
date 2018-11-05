@@ -21,11 +21,11 @@ async function getCertificate(domainId, certId) {
   return fullChain.join("\n");
 }
 
-async function getStuff() {
+async function run() {
   let domainId = await getDomainId(process.env.DOMAIN_NAME);
   let certId = await getCertId(domainId);
   let certificate = await getCertificate(domainId, certId);
   console.log(certificate);
 }
 
-getStuff();
+run();
