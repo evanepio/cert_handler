@@ -5,26 +5,28 @@ var client = require("dnsimple")({
   accessToken: process.env.DNSIMPLE_API_TOKEN,
 });
 
-async function getDomainId(domainName) {
-  let response = await client.domains.getDomain(process.env.DNSIMPLE_ACCOUNT_ID, domainName);
+async function getDomainId(accountId, domainName) {
+  let response = await client.domains.getDomain(accountId, domainName);
   return response.data.id;
 }
 
-async function getCertId(domainId) {
-  let response = await client.certificates.listCertificates(process.env.DNSIMPLE_ACCOUNT_ID, domainId);
+async function getCertId(accountId, domainId) {
+  let response = await client.certificates.listCertificates(accountId, domainId);
   return response.data[0].id;
 }
 
-async function getCertificate(domainId, certId) {
-  let response = await client.certificates.downloadCertificate(process.env.DNSIMPLE_ACCOUNT_ID, domainId, certId);
+async function getCertificate(accountId, domainId, certId) {
+  let response = await client.certificates.downloadCertificate(accountId, domainId, certId);
   let fullChain = [response.data.server, ...response.data.chain];
   return fullChain.join("\n");
 }
 
 async function run() {
-  let domainId = await getDomainId(process.env.DOMAIN_NAME);
-  let certId = await getCertId(domainId);
-  let certificate = await getCertificate(domainId, certId);
+  let accountId = process.env.DNSIMPLE_ACCOUNT_ID;
+  let domain = process.env.DOMAIN_NAME
+  let domainId = await getDomainId(accountId, domain);
+  let certId = await getCertId(accountId, domainId);
+  let certificate = await getCertificate(accountId, domainId, certId);
   console.log(certificate);
 }
 
