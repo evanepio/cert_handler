@@ -21,13 +21,23 @@ async function getCertificate(accountId, domainId, certId) {
   return fullChain.join("\n");
 }
 
+async function getPrivateKey(accountId, domainId, certId) {
+  let response = await client.certificates.getCertificatePrivateKey(accountId, domainId, certId);
+  return response.data.private_key;
+}
+
 async function run() {
   let accountId = process.env.DNSIMPLE_ACCOUNT_ID;
   let domain = process.env.DOMAIN_NAME
+
   let domainId = await getDomainId(accountId, domain);
   let certId = await getCertId(accountId, domainId);
+
   let certificate = await getCertificate(accountId, domainId, certId);
   console.log(certificate);
+
+  let privateKey = await getPrivateKey(accountId, domainId, certId);
+  console.log(privateKey);
 }
 
 run();
