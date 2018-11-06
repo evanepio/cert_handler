@@ -1,5 +1,6 @@
 "use strict";
 require('dotenv').load();
+const fs = require('fs').promises;
 
 const client = require("dnsimple")({
   accessToken: process.env.DNSIMPLE_API_TOKEN,
@@ -28,16 +29,18 @@ async function getPrivateKey(accountId, domainId, certId) {
 
 async function run() {
   let accountId = process.env.DNSIMPLE_ACCOUNT_ID;
-  let domain = process.env.DOMAIN_NAME
+  let domain = process.env.DOMAIN_NAME;
+  let certFile = process.env.SAVED_CERT_FILE;
+  let privateKeyFile = process.env.SAVED_PRIVATE_KEY_FILE;
 
   let domainId = await getDomainId(accountId, domain);
   let certId = await getCertId(accountId, domainId);
 
   let certificate = await getCertificate(accountId, domainId, certId);
-  console.log(certificate);
+  fs.writeFile(certFile, certificate);
 
   let privateKey = await getPrivateKey(accountId, domainId, certId);
-  console.log(privateKey);
+  fs.writeFile(privateKeyFile, privateKey);
 }
 
 run();
