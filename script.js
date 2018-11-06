@@ -28,19 +28,24 @@ async function getPrivateKey(accountId, domainId, certId) {
 }
 
 async function run() {
-  let accountId = process.env.DNSIMPLE_ACCOUNT_ID;
-  let domain = process.env.DOMAIN_NAME;
-  let certFile = process.env.SAVED_CERT_FILE;
-  let privateKeyFile = process.env.SAVED_PRIVATE_KEY_FILE;
-
-  let domainId = await getDomainId(accountId, domain);
-  let certId = await getCertId(accountId, domainId);
-
-  let certificate = await getCertificate(accountId, domainId, certId);
-  fs.writeFile(certFile, certificate);
-
-  let privateKey = await getPrivateKey(accountId, domainId, certId);
-  fs.writeFile(privateKeyFile, privateKey);
+  try {
+    let accountId = process.env.DNSIMPLE_ACCOUNT_ID;
+    let domain = process.env.DOMAIN_NAME;
+    let certFile = process.env.SAVED_CERT_FILE;
+    let privateKeyFile = process.env.SAVED_PRIVATE_KEY_FILE;
+  
+    let domainId = await getDomainId(accountId, domain);
+    let certId = await getCertId(accountId, domainId);
+  
+    let certificate = await getCertificate(accountId, domainId, certId);
+    await fs.writeFile(certFile, certificate);
+  
+    let privateKey = await getPrivateKey(accountId, domainId, certId);
+    await fs.writeFile(privateKeyFile, privateKey);
+  } catch(e) {
+    console.log("Something went wrong...");
+    console.log(e);
+  }
 }
 
 run();
