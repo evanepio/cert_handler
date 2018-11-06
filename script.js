@@ -1,7 +1,7 @@
 "use strict";
 require('dotenv').load();
 
-var client = require("dnsimple")({
+const client = require("dnsimple")({
   accessToken: process.env.DNSIMPLE_API_TOKEN,
 });
 
