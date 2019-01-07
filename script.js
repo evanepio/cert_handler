@@ -1,6 +1,6 @@
 "use strict";
 require('dotenv').load();
-const fs = require('fs').promises;
+const fs = require('fs-extra');
 
 const client = require("dnsimple")({
   accessToken: process.env.DNSIMPLE_API_TOKEN,
