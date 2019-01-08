@@ -9,5 +9,3 @@ You need the following environment variables:
 * `DOMAIN_NAME` - the domain for which you're downloading the cert and key
 * `SAVED_CERT_FILE` - the file name to save the full chain certificate to. It must be an absolute path!
 * `SAVED_PRIVATE_KEY_FILE` - the file name to save the private key to. It must be an absolute path!
-
-This saves the cert and privarte key to a file using the experimental Node File System Promises API. Super safe, if you like `(node:48793) ExperimentalWarning: The fs.promises API is experimental` in your console.
